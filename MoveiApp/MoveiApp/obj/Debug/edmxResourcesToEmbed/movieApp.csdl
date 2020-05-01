@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="movieApp" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="movieAppContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Movies" EntityType="movieApp.Movie" />
+    <EntitySet Name="MovieTypes" EntityType="movieApp.MovieType" />
+    <AssociationSet Name="MovieMovieType" Association="movieApp.MovieMovieType">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="MovieType" EntitySet="MovieTypes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="RunningTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Ratting" Type="Double" Nullable="false" />
+    <Property Name="Establish" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="MovieType" Relationship="movieApp.MovieMovieType" FromRole="Movie" ToRole="MovieType" />
+    <Property Name="image" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MovieType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Movies" Relationship="movieApp.MovieMovieType" FromRole="MovieType" ToRole="Movie" />
+  </EntityType>
+  <Association Name="MovieMovieType">
+    <End Type="movieApp.Movie" Role="Movie" Multiplicity="*" />
+    <End Type="movieApp.MovieType" Role="MovieType" Multiplicity="1" />
+  </Association>
+</Schema>
